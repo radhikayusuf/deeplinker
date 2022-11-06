@@ -1,0 +1,21 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "deeplinker"
+include ':app'
+include ':feature_alpha'
+include ':lib_deeplinker_processor'
+include ':lib_deeplinker_annotations'
+include ':lib_deeplinker'
+include ':feature_beta'

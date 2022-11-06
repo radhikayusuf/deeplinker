@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="id.radhikayusuf.feature.alpha">
+
+    <application>
+
+        <meta-data
+            android:value="@string/deeplinkers_identifier_value"
+            android:name="id.radhikayusuf.feature.alpha.AlphaEntryPoint"/>
+
+        <activity
+            android:name=".AlphaActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="id.radhikayusuf.feature.beta">
+
+    <application>
+
+        <meta-data
+            android:value="@string/deeplinkers_identifier_value"
+            android:name="id.radhikayusuf.feature.beta.BetaEntryPoint"/>
+
+        <activity
+            android:name=".BetaActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>
