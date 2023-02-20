@@ -12,28 +12,28 @@ import kotlinx.coroutines.launch
 
 class DeeplinkActivity : AppCompatActivity() {
 
-    private val deeplinkRouter by lazy { Deeplinkers.getDeeplinkRouterInstance() }
-    private val deeplinkRetriever by lazy { Deeplinkers.getDeeplinkRetrieverInstance() }
+//    private val deeplinkRouter by lazy { Deeplinkers.getDeeplinkRouterInstance() }
+//    private val deeplinkRetriever by lazy { Deeplinkers.getDeeplinkRetrieverInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_deeplink)
-        lifecycleScope.launch(Dispatchers.IO) {
-            if (deeplinkRetriever.registeredDeeplinks.isEmpty()) {
-                deeplinkRetriever.initialize()
-            }
-
-            val url = intent.getStringExtra(Intent.EXTRA_TEXT)?.let { extractLinks(it) }?.firstOrNull()
-            var uri: Uri = intent.data ?: Uri.parse(url)
-
-
-            when (deeplinkRouter.proceedDeeplinkUrl(this@DeeplinkActivity, uri)) {
-                RedirectResult.AUTH_FAIL -> {}
-                RedirectResult.NOT_FOUND -> {}
-                RedirectResult.SUCCESS -> {}
-            }
-            this@DeeplinkActivity.finish()
-        }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            if (deeplinkRetriever.registeredDeeplinks.isEmpty()) {
+//                deeplinkRetriever.initialize()
+//            }
+//
+//            val url = intent.getStringExtra(Intent.EXTRA_TEXT)?.let { extractLinks(it) }?.firstOrNull()
+//            var uri: Uri = intent.data ?: Uri.parse(url)
+//
+//
+//            when (deeplinkRouter.proceedDeeplinkUrl(this@DeeplinkActivity, uri)) {
+//                RedirectResult.AUTH_FAIL -> {}
+//                RedirectResult.NOT_FOUND -> {}
+//                RedirectResult.SUCCESS -> {}
+//            }
+//            this@DeeplinkActivity.finish()
+//        }
     }
 
     private fun extractLinks(text: String): List<String> {

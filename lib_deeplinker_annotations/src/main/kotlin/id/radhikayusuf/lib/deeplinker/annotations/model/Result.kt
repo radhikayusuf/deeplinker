@@ -1,6 +1,6 @@
-package id.radhikayusuf.lib.deeplinker.model
+package id.radhikayusuf.lib.deeplinker.annotations.model
 
-data class DeeplinkData(
+data class Result(
     val schema: String,
     val host: String,
     val path: String,

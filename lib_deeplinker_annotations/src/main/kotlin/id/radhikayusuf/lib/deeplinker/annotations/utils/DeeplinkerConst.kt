@@ -1,4 +1,4 @@
-package id.radhikayusuf.lib.deeplinker.annotations
+package id.radhikayusuf.lib.deeplinker.annotations.utils
 
 /**
  * @author radhikayusuf

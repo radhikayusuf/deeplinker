@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -30,11 +30,18 @@ android {
     }
 }
 
+kotlin.sourceSets.main {
+    kotlin.srcDirs(
+            file("$buildDir/generated/ksp"),
+            file("src/main/kotlin")
+    )
+}
+
 dependencies {
     implementation project(':lib_deeplinker')
     implementation project(':lib_deeplinker_annotations')
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    kapt project(':lib_deeplinker_processor')
+    ksp project(':lib_deeplinker_processor')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'

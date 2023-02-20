@@ -1,7 +1,8 @@
 package id.radhikayusuf.sample.deeplinker
 
 import android.app.Application
-import id.radhikayusuf.lib.deeplinker.Deeplinkers
+import id.radhikayusuf.deeplinker.generated.DeeplinkStore
+import id.radhikayusuf.lib.deeplinker.DeeplinkRouter
 
 /**
  * @author radhikayusuf
@@ -12,6 +13,10 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Deeplinkers.initialize(this)
+        ROUTER = DeeplinkRouter(DeeplinkStore(this).deeplinkContent)
+    }
+
+    companion object {
+        var ROUTER: DeeplinkRouter? = null
     }
 }

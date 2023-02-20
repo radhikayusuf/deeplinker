@@ -1,5 +1,7 @@
 package id.radhikayusuf.lib.deeplinker.annotations
 
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.SOURCE)
 annotation class Deeplink(
     val hosts: Array<String>,
     val pathPatterns: String,

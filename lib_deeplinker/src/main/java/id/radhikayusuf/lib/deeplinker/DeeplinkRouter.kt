@@ -2,20 +2,19 @@ package id.radhikayusuf.lib.deeplinker
 
 import android.content.Context
 import android.net.Uri
-import id.radhikayusuf.lib.deeplinker.annotations.DeeplinkMap
-import id.radhikayusuf.lib.deeplinker.model.DeeplinkData
+import id.radhikayusuf.lib.deeplinker.annotations.model.Result
+import id.radhikayusuf.lib.deeplinker.annotations.model.Signal
 import id.radhikayusuf.lib.deeplinker.model.DeeplinkMatcher
 import id.radhikayusuf.lib.deeplinker.model.RedirectResult
 import id.radhikayusuf.lib.deeplinker.utils.DeeplinkUtils.checkMatchUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class DeeplinkRouter internal constructor(
-    private val deeplinkRetriever: DeeplinkRetriever
+class DeeplinkRouter(
+    private val deeplinkSignals: Lazy<List<Signal>>
 ) {
 
-    private val deepLinks: List<DeeplinkMap<Context, DeeplinkData, DeeplinkRouter>>
-            get() = deeplinkRetriever.registeredDeeplinks
+    fun peek() = deeplinkSignals.value
 
     suspend fun proceedDeeplinkUrl(context: Context, url: String) =
         proceedDeeplinkUrl(context, Uri.parse(url))
@@ -34,7 +33,7 @@ class DeeplinkRouter internal constructor(
                     .associateBy({ it.first }, { it.second })
             }
 
-            val deeplinkData = DeeplinkData(
+            val result = Result(
                 schema = uri.scheme.orEmpty(),
                 host = uri.authority.orEmpty(),
                 path = uri.path.orEmpty(),
@@ -42,15 +41,15 @@ class DeeplinkRouter internal constructor(
                 dynamicPaths = dynamicPaths,
                 fullUrl = uri.toString()
             )
-            target.closure.invoke(context, deeplinkData, this@DeeplinkRouter)
+            target.closure.invoke(result)
             RedirectResult.SUCCESS
         } else {
             RedirectResult.NOT_FOUND
         }
     }
 
-    private fun findMatchDeeplink(uri: Uri, dynamicPaths: MutableMap<String, String>): DeeplinkMap<Context, DeeplinkData, DeeplinkRouter>? {
-        return deepLinks.firstOrNull { signal ->
+    private fun findMatchDeeplink(uri: Uri, dynamicPaths: MutableMap<String, String>): Signal? {
+        return deeplinkSignals.value.firstOrNull { signal ->
             val patternCheckerResult = checkHostAndPatternMatches(uri, signal)
             val hasFound = patternCheckerResult.isMatch &&
                     uri.authority.orEmpty() in signal.hosts &&
@@ -62,7 +61,7 @@ class DeeplinkRouter internal constructor(
 
     private fun isLoggedIn() = true
 
-    private fun checkHostAndPatternMatches(uri: Uri, signal: DeeplinkMap<*, *, *>): DeeplinkMatcher {
+    private fun checkHostAndPatternMatches(uri: Uri, signal: Signal): DeeplinkMatcher {
         return checkMatchUrl(uri.path.orEmpty(), signal.pathPatterns)
     }
 
